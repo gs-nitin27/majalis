@@ -62,7 +62,7 @@ if($_REQUEST['act']=="register")
 	   		$row 	= mysql_num_rows($validate);
 	   	   	if ($row == 1)
 	   		{
-	   		while($row1 = mysql_fetch_assoc($validate) )
+	   		while($row1 = mysql_fetch_assoc($validate))
 	   		{								
 	    	
 	    	$res1 = array('data' => $row1,'status' => 1);
@@ -84,20 +84,217 @@ if($_REQUEST['act']=="register")
 else if($_POST['act']=="createmajalis")
 {
 	
-$status = array('FAILURE' => 0 , 'SUCCESS' => 1);
+$status   		= array('sucess' => 1, 'failure'=>0);
 $data1 = json_decode($_POST[ 'data' ]);
 $req = new userdataservice();
-//$res = $req->create_user($item);
 $res = $req->create_user($data1);
 if($res != 0)
 {
-echo json_encode($status['SUCCESS']);
+
+	$resp['status'] = "1";
+   //echo json_encode($res);
+//$res1 = ('status' => '1');
+//$data = ($res1);
+echo json_encode($resp);
 }
 else
 {	
-echo json_encode($status['FAILURE']);
+	$resp['status'] = "0";
+   echo json_encode($resp);
+//$res2 = ('status' => 0);
+//$data = ($res2);
+echo json_encode($resp);
 }
 }
+
+
+
+
+        
+
+/*  ********************* Code For Searching  Majalis *******************************************/
+
+//urldecode(($_POST ['date']));
+else if($_POST['act'] == "search")
+	//else if($_POST['act']=="12")
+{
+if (isset($_POST["date"]))
+{
+  $event_date = urldecode(($_POST ['date']));
+  //echo $event_date;
+ } 
+else
+{
+$event_date = null;
+//echo $event_date;
+
+}
+
+if (isset($_POST["country"]))
+{
+
+$event_country =urldecode(($_POST ['country']));
+//echo $event_country;
+//echo "ram";
+}
+else
+{
+	$event_country=null;
+	//$event_country="tata";
+	//echo $event_country;
+	//echo "ram";
+}
+  
+if (isset($_POST["state"]))
+{
+$event_state  =urldecode(($_POST ['state']));
+//echo $event_state;
+//echo "TATA is ";
+
+}
+else
+{
+	$event_state=null;
+	//echo $event_state;
+	//echo "DOEACC";
+}
+if (isset($_POST["city"]))
+{
+$event_city  		=urldecode($_POST ['city']);
+
+
+
+}
+else
+{
+	$event_city=null;
+	//echo "RAKEESH";
+	//echo $city;
+}
+
+if (isset($_POST["para"]))
+{
+$para     					=urldecode($_POST ['para']);
+//echo $para;
+}
+else
+{
+	$para=null;
+	//echo $para;
+}
+
+
+
+
+				if($para == '') // For Default Search parameters
+				 {
+				$whereclause = "WHERE"." ";
+				//echo $whereclause;
+				
+				//else 
+				//{
+				//	$whereclause=nulll;
+				//}
+				 if($event_date !="")
+				{
+				//echo $event_date;
+				$where2= "`date` LIKE '%$event_date%' ";
+
+				}
+				else
+				{
+					$where2=null;
+
+				}
+				if($event_country != "") 
+				{
+				$where1= "`country` LIKE '%$event_country%' ";
+				//echo $where1;
+				}
+				else
+				{
+					$where1=null;
+				}
+			
+			
+				if($event_state != "")
+				{
+				$where3 = "AND `sate` LIKE '%$event_state%'"; 
+				//echo $where3;
+				}
+				else
+				{
+				$where3=null;	
+				}
+				if($event_city != "")
+ 				{
+				$where4 = "AND  `city` LIKE '%$event_city%'"; 
+				//echo $where4;
+				}
+				else
+				{
+					$where4=null;
+				}
+		
+				
+				//echo $where3;
+
+				$wherenext = $where2.$where1.$where3.$where4;
+			
+//echo $wherenext;
+
+
+		
+
+ 		if($wherenext == "" )
+ 			{
+			$fwhere  = $whereclause."1";
+ 			}
+
+ 			
+ 			else
+ 			{
+			// echo $fwhere;die();
+			$fwhere  = $whereclause.$wherenext; 
+			}
+		
+		
+	}	
+	else
+		{
+			
+		$fwhere = $para;
+		}
+
+
+			$rev = new userdataservice();
+			//echo $fwhere; 
+
+			$res = $rev->event_search($fwhere);
+   			 if($res != 0)
+ 			{
+    			$data = array('data'=>$res , 'status'=>'1');
+    		    echo json_encode($data);
+    		}
+    		else
+   			{
+    		$data = array('data'=>'0' , 'status'=>'0');
+   			 echo json_encode($data);
+   			}
+
+}
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 ?>
 

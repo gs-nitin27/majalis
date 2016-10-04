@@ -10,22 +10,32 @@
 
 
 //var jsondata = {"id":505,"name":"nitin"};
-var jsondata = {"name":"Dr Rakesh","phone_no":99379546,"address1":"Devria","address2":"GKP","country":"India","state":"UP","city":"Gorakhpur","pincode":273008,"zakisname":"tata","date":"2016-08-22","time":"3:45","type":1};
+//var jsondata = {"name":"Dr Devendra Pandey","phone_no":99379546,"address1":"Devria","address2":"GKP","country":"India","state":"UP","city":"Gorakhpur","pincode":273008,"zakisname":"tata","date":"2016-08-22","time":"3:45","type":1};
 
 //`name`, `phone_no`, `address1`, `address2`, `country`, `state`, `city`, `pincode`, `zakisname`, `date`, `time`, `type`
 
+//var myObj = null;
+//if(objectIsNotNull){
+  // myObj = $.toJSON(Comment);
+//}
 
 
 
-
-var data = JSON.stringify(jsondata);
+//var data = JSON.stringify(jsondata);
 $.ajax({
 
     type: "POST",
     url: "user.php",
     dataType:"json",
-    data: "act=createmajalis&data="+data,
-    //data: "act=getresource&title",
+    //data: $.toJSON(Comment),
+    //..data: myObj,
+    //data: "act=createmajalis&data="+data,
+//data: {'act' : search,'date' : 12-12-232, 'city' : No1,'country' :'India'},
+    //data: 'act=search' +No1+'&b='+No2,
+    //data: { a: No1, b: No2 },
+    //data: "act=search&date=12-29-2016&",
+    data: "act=search&date=2-10-2016",
+   // data: "date=12",
 //echo "ram",
    // dataType: "json",
     success: function(result) 
