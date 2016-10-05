@@ -97,7 +97,7 @@ if($res != 0)
 else
 {	
 	$resp['status'] = "0";
-   echo json_encode($resp);
+  // echo json_encode($resp);
 	echo json_encode($resp);
 }
 }

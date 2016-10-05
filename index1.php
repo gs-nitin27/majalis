@@ -34,7 +34,7 @@ $.ajax({
     //data: 'act=search' +No1+'&b='+No2,
     //data: { a: No1, b: No2 },
     //data: "act=search&date=12-29-2016&",
-    data: "act=search&date=05-10-2016&country=",
+    data: "act=search&date=05-10-2016&country=tata",
    // data: "date=12",
 //echo "ram",
    // dataType: "json",

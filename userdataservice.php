@@ -58,22 +58,25 @@ public function create_user($item)
 
 public function event_search($fwhere)
   {
-  $query = mysql_query("SELECT  IFNull(`name`,'') AS name, IFNull(`phone_no`,'') AS phone_no, IFNull(`address1`,'') AS address1 , IFNull(`address2`,'') AS address2,IFNull(`country`,'') AS country,IFNull(`state`,'') AS state,IFNull(`city`,'') AS city,IFNull(`pincode`,'') AS pincode,IFNull(`zakisname`,'') AS zakisname,IFNull(`date`,'') AS date,IFNull(`time`,'') AS time,IFNull(`type`,'') AS type FROM `maj_create`".$fwhere."");
-  
-$query1 = $query;
-if($query1)
+     $query = mysql_query("SELECT  IFNull(`name`,'') AS name, IFNull(`phone_no`,'') AS phone_no, IFNull(`address1`,'') AS address1 , IFNull(`address2`,'') AS address2,IFNull(`country`,'') AS country,IFNull(`state`,'') AS state,IFNull(`city`,'') AS city,IFNull(`pincode`,'') AS pincode,IFNull(`zakisname`,'') AS zakisname,IFNull(`date`,'') AS date,IFNull(`time`,'') AS time,IFNull(`type`,'') AS type FROM `maj_create`".$fwhere."");
+ $query1 = $query;
+if(mysql_num_rows($query1) > 0)
 {
 while($row = mysql_fetch_assoc($query1))
 {
 $rows[] = $row;
 }
-return $rows;
-} 
-else
-{
-return 0;
+  return $rows;
+ } 
+  else
+ {
+  return 0;
+   }
 }
+
 }
-}
+
+
+
 
 ?>
