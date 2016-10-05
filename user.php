@@ -81,11 +81,11 @@ if($_REQUEST['act']=="register")
 
 
 
-else if($_POST['act']=="createmajalis")
+else if($_REQUEST['act']=="createmajalis")
 {
 	
 $status   		= array('sucess' => 1, 'failure'=>0);
-$data1 = json_decode($_POST[ 'data' ]);
+$data1 = json_decode($_REQUEST[ 'data' ]);
 $req = new userdataservice();
 $res = $req->create_user($data1);
 if($res != 0)
@@ -110,49 +110,37 @@ else
 /*  ********************* Code For Searching  Majalis *******************************************/
 
 
-else if($_POST['act'] == "search")
+else if($_REQUEST['act'] == "search")
 	
-{
-if (isset($_POST["date"]))
-{
-  $event_date = urldecode(($_POST ['date']));
-  
- } 
+ {
+if (isset($_REQUEST["date"]))
+ {
+  $event_date = urldecode(($_REQUEST ['date']));
+  } 
 else
 {
 $event_date = null;
-
-
 }
-
-if (isset($_POST["country"]))
+if (isset($_REQUEST["country"]))
 {
-
-$event_country =urldecode(($_POST ['country']));
+$event_country =urldecode(($_REQUEST ['country']));
 }
 else
 {
 	$event_country=null;
-	
 }
-  
-if (isset($_POST["state"]))
+if (isset($_REQUEST["state"]))
 {
-$event_state  =urldecode(($_POST ['state']));
-
-
+$event_state  =urldecode(($_REQUEST ['state']));
 }
 else
 {
 	$event_state=null;
 	
 }
-if (isset($_POST["city"]))
+if (isset($_REQUEST["city"]))
 {
-$event_city  		=urldecode($_POST ['city']);
-
-
-
+$event_city  		=urldecode($_REQUEST ['city']);
 }
 else
 {
@@ -160,49 +148,43 @@ else
 	
 }
 
-if (isset($_POST["para"]))
+if (isset($_REQUEST["para"]))
 {
-$para     					=urldecode($_POST ['para']);
+$para     					=urldecode($_REQUEST ['para']);
 
 }
 else
 {
 	$para=null;
-	
 }
-
-
-
-
 				if($para == '') // For Default Search parameters
 				 {
 				$whereclause = "WHERE"." ";
 				
 				 if($event_date !="")
 				{
-				
-				$where2= "`date` LIKE '%$event_date%' ";
-
+				$where2="`date` LIKE '$event_date'";
 				}
 				else
 				{
 					$where2=null;
-
 				}
 				if($event_country != "") 
 				{
-				$where1= "`country` LIKE '%$event_country%' ";
+				$where1= "AND `country` LIKE '%$event_country%' ";
 				
 				}
 				else
 				{
+					
 					$where1=null;
+					
 				}
 			
 			
 				if($event_state != "")
 				{
-				$where3 = "AND `sate` LIKE '%$event_state%'"; 
+				$where3 = "AND `state` LIKE '%$event_state%'"; 
 				
 				}
 				else
@@ -220,27 +202,24 @@ else
 				}
 		
 				$wherenext = $where2.$where1.$where3.$where4;
+				//echo $wherenext;
 		
- 		if($wherenext == "" )
+ 			if($wherenext == "" )
  			{
 			$fwhere  = $whereclause."1";
  			}
-
  			else
  			{
-			
 			$fwhere  = $whereclause.$wherenext; 
 			}
-			
-	}	
-	else
-		{
-			
-		$fwhere = $para;
-		}
+			}	
+			else
+			{
+			$fwhere = $para;
+			}
 			$rev = new userdataservice();
 			$res = $rev->event_search($fwhere);
-   			 if($res != 0)
+			if($res != 0)
  			{
     			$data = array('data'=>$res , 'status'=>'1');
     		    echo json_encode($data);
