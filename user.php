@@ -208,7 +208,7 @@ else
 
 else if($_POST['act'] == "searchplace")
 	
-{
+{   
 	  		$id 		=	@$_POST['id'];
   			$type 		=	@$_POST['type'];
 			if($type == null && $id == null) 
