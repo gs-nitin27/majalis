@@ -76,9 +76,9 @@ if($_REQUEST['act']=="register")
 else if($_REQUEST['act']=="createmajalis")
 {
 $status   		= array('sucess' => 1, 'failure'=>0);
-$data1 = json_decode($_REQUEST[ 'data' ]);
-$req = new userdataservice();
-$res = $req->create_user($data1);
+$data1 			= json_decode($_REQUEST[ 'data' ]);
+$req 			= new userdataservice();
+$res 			= $req->create_user($data1);
 if($res != 0)
 {
 $resp['status'] = "1";
